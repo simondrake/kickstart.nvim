@@ -15,12 +15,13 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        -- Conform can also run multiple formatters sequentially
-        -- python = { "isort", "black" },
-        --
-        -- You can use a sub-list to tell conform to run *until* a formatter
-        -- is found.
-        -- javascript = { { "prettierd", "prettier" } },
+        json = { 'prettier' },
+        markdown = { 'prettier' },
+        sh = { 'shfmt', 'shellharden' },
+        yaml = { 'prettier' },
+        javascript = { { 'prettierd', 'prettier' } },
+        -- Use the "*" filetype to run formatters on all filetypes.
+        ['*'] = { 'codespell', 'trim_whitespace' },
       },
     },
   },

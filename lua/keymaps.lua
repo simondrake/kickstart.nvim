@@ -30,3 +30,31 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+vim.keymap.set('v', '<C-y>', function()
+  require('decorated_yank').decorated_yank_with_link()
+end)
+
+vim.keymap.set('n', 'TE', function()
+  require('toggle_export').ToggleExport()
+end)
+
+-- Find references for the word under your cursor.
+-- exclude test files
+vim.keymap.set('n', 'gr', function()
+  require('telescope.builtin').lsp_references {
+    file_ignore_patterns = { '%_test.go' },
+    include_declaration = true,
+    show_line = false,
+  }
+end)
+
+vim.keymap.set('n', '<leader>t', function()
+  vim.cmd 'e ~/todo.md'
+end)
+vim.keymap.set('n', '<leader>n', function()
+  vim.cmd 'e ~/notes.md'
+end)
+vim.keymap.set('n', '<leader>j', function()
+  vim.cmd 'e ~/journal.md'
+end)

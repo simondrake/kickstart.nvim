@@ -10,6 +10,7 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   { 'numToStr/Comment.nvim', opts = {} },
+  -- [[ Git ]]
   {
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -20,22 +21,28 @@ require('lazy').setup({
         topdelete = { text = '‾' },
         changedelete = { text = '~' },
       },
+      on_attach = function(bufnr)
+        local function map(mode, lhs, rhs, opts)
+          opts = vim.tbl_extend('force', { noremap = true, silent = true }, opts or {})
+          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
+        end
+
+        -- Navigation
+        map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
+        map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+      end,
     },
   },
+  { 'tpope/vim-fugitive' },
+  { 'tpope/vim-rhubarb' },
+  { 'shumphrey/fugitive-gitlab.vim' },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
+  -- [[ Theme ]]
+  {
+    'rebelot/kanagawa.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
-
+      vim.cmd.colorscheme 'kanagawa'
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
@@ -43,6 +50,31 @@ require('lazy').setup({
 
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+
+  { 'tpope/vim-sensible' },
+  { 'mg979/vim-visual-multi', branch = 'master' },
+  {
+    'simondrake/decorated_yank',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    opts = {
+      domains = {
+        github = {
+          url = 'github.com',
+          blob = '/blob/',
+          line_format = '#L%s-L%s',
+        },
+      },
+    },
+  },
+  { 'simondrake/toggle_export' },
+  {
+    'simondrake/gomodifytags',
+    opts = {
+      override = true,
+      options = { 'json=omitempty' },
+      parse = { enabled = true },
+    },
+  },
 
   require 'plugins.telescope',
   require 'plugins.conform-nvim',
@@ -52,6 +84,7 @@ require('lazy').setup({
   require 'plugins.debug',
   require 'plugins.indent_line',
   require 'plugins.lint',
+  require 'plugins.localdev',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
