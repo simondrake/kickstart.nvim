@@ -31,12 +31,26 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
+vim.keymap.set('n', '<leader>l', function()
+  pcall(vim.cmd, 'cnext')
+end)
+
+vim.keymap.set('n', '<leader>k', function()
+  pcall(vim.cmd, 'cprevious')
+end)
+
 vim.keymap.set('v', '<C-y>', function()
   require('decorated_yank').decorated_yank_with_link()
 end)
 
 vim.keymap.set('n', 'TE', function()
   require('toggle_export').ToggleExport()
+end)
+
+vim.keymap.set('n', '<leader>sd', function()
+  require('telescope.builtin').diagnostics {
+    severity = vim.diagnostic.severity.ERROR,
+  }
 end)
 
 -- Find references for the word under your cursor.
@@ -46,6 +60,26 @@ vim.keymap.set('n', 'gr', function()
     file_ignore_patterns = { '%_test.go' },
     include_declaration = true,
     show_line = false,
+  }
+end)
+
+vim.keymap.set('n', 'gd', function()
+  require('telescope.builtin').lsp_definitions {
+    -- jump_type = 'vsplit',
+  }
+end)
+
+-- Find files
+vim.keymap.set('n', '<leader>ff', function()
+  require('telescope.builtin').find_files {
+    find_command = { 'ag', '--files-with-matches', '--ignore-case', '--skip-vcs-ignore', '--hidden', '--ignore', '.git' },
+  }
+end)
+-- File files in current directory
+vim.keymap.set('n', '<leader>fd', function()
+  require('telescope.builtin').find_files {
+    find_command = { 'ag', '--files-with-matches', '--ignore-case', '--skip-vcs-ignore', '--hidden', '--ignore', '.git' },
+    cwd = require('telescope.utils').buffer_dir(),
   }
 end)
 
