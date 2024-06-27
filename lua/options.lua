@@ -22,15 +22,14 @@ vim.opt.breakindent = true
 -- Save undo history
 vim.opt.undofile = true
 
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.opt.ignorecase = true
-vim.opt.smartcase = true
+-- Case-sensitive searching UNLESS \C
+vim.opt.ignorecase = false
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = 'yes'
 
 -- Decrease update time
-vim.opt.updatetime = 250
+vim.opt.updatetime = 500
 
 -- Decrease mapped sequence wait time
 -- Displays which-key popup sooner
@@ -60,9 +59,9 @@ vim.opt.shiftround = true
 vim.opt.smartindent = true
 vim.opt.autoindent = true
 
-vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
+vim.opt.shiftwidth = 2
 
 vim.opt.backup = false
 vim.opt.swapfile = false

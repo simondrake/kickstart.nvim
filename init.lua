@@ -6,6 +6,7 @@ require 'keymaps'
 require 'autocommands'
 require 'commands'
 require 'plugins/lazy'
+require 'filetype'
 
 -- [[ Work ]]
 pcall(function()

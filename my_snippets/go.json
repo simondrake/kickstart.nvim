@@ -1,0 +1,6 @@
+{
+  "subtest": {
+    "prefix": "subtest",
+    "body": ["t.Run(\"${1:Description}\", func(t *testing.T) {\n$2\n})"]
+  }
+}

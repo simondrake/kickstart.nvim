@@ -8,128 +8,7 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  -- [[ testing ]]
-  -- These may be deleted or may be moved to a proper section where they will have a home forever
-  -- or, at least, until they outlive their usefulness
-  { 'rmagatti/goto-preview', opts = {
-    width = 240,
-    height = 30,
-    default_mappings = true,
-  } },
-  { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true },
-  {
-    'catppuccin/nvim',
-    name = 'catppuccin',
-    priority = 1000,
-    init = function()
-      vim.cmd.colorscheme 'catppuccin-macchiato'
-    end,
-  },
-  {
-    'nvim-treesitter/nvim-treesitter-context',
-    opts = {
-      enable = true,
-    },
-  },
-  {
-    'nvim-lualine/lualine.nvim',
-    dependencies = { 'nvim-tree/nvim-web-devicons', 'SmiteshP/nvim-navic' },
-    config = function()
-      require('lualine').setup {
-        options = {
-          icons_enabled = true,
-          disabled_filetypes = {},
-        },
-
-        sections = {
-          lualine_a = {
-            'mode',
-          },
-          lualine_b = {
-            'branch',
-            'diff',
-          },
-          lualine_c = {
-            {
-              'filename',
-              file_status = false, -- displays file status (readonly status, modified status)
-              path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
-            },
-            -- function()
-            --   return require('nvim-treesitter').statusline {
-            --     indicator_size = 100,
-            --     type_patterns = { 'class', 'function', 'method' },
-            --     transform_fn = function(line, _node)
-            --       return line:gsub('%s*[%[%(%{]*%s*$', '')
-            --     end,
-            --     separator = ' -> ',
-            --   }
-            -- end,
-          },
-          lualine_x = { 'encoding', 'filetype' },
-          lualine_y = { 'progress' },
-          lualine_z = { 'location' },
-        },
-        inactive_sections = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = { 'filename' },
-          lualine_x = { 'location' },
-          lualine_y = {},
-          lualine_z = {},
-        },
-        tabline = {
-          lualine_a = {},
-          lualine_b = {},
-          lualine_c = { 'filename' },
-          lualine_x = {},
-          lualine_y = {},
-          lualine_z = {},
-        },
-      }
-    end,
-  },
-  {
-    'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    build = 'cd app && yarn install',
-    init = function()
-      vim.g.mkdp_filetypes = { 'markdown' }
-    end,
-    ft = { 'markdown' },
-  },
-  {
-    'smoka7/multicursors.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      'smoka7/hydra.nvim',
-    },
-    opts = {
-      hint_config = {
-        border = 'rounded',
-        position = 'bottom-right',
-      },
-      generate_hints = {
-        normal = true,
-        insert = true,
-        extend = true,
-        config = {
-          column_count = 1,
-        },
-      },
-    },
-    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
-    keys = {
-      {
-        mode = { 'v', 'n' },
-        '<Leader>m',
-        '<cmd>MCstart<cr>',
-        desc = 'Create a selection for selected text or word under the cursor',
-      },
-    },
-  },
-
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
   { 'numToStr/Comment.nvim', opts = {} },
   -- [[ Git ]]
   {
@@ -206,6 +85,8 @@ require('lazy').setup({
   require 'plugins.indent_line',
   require 'plugins.lint',
   require 'plugins.localdev',
+  require 'plugins.lualine',
+  require 'plugins.testing',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

@@ -1,3 +1,31 @@
+local cmp_kinds = {
+  Class = ' ',
+  Color = ' ',
+  Constant = 'ﲀ ',
+  Constructor = ' ',
+  Enum = '練',
+  EnumMember = ' ',
+  Event = ' ',
+  Field = ' ',
+  File = '',
+  Folder = ' ',
+  Function = ' ',
+  Interface = 'ﰮ ',
+  Keyword = ' ',
+  Method = ' ',
+  Module = ' ',
+  Operator = '',
+  Property = ' ',
+  Reference = ' ',
+  Snippet = ' ',
+  Struct = ' ',
+  Text = '✎ ',
+  TypeParameter = ' ',
+  Unit = '塞',
+  Value = ' ',
+  Variable = ' ',
+}
+
 return {
   {
     'hrsh7th/nvim-cmp',
@@ -26,6 +54,10 @@ return {
             end,
           },
         },
+        -- Custom snippets
+        config = function()
+          require('luasnip.loaders.from_vscode').lazy_load { paths = '~/.config/nvim/my_snippets' }
+        end,
       },
       'saadparwaiz1/cmp_luasnip',
 
@@ -34,6 +66,7 @@ return {
       --  into multiple repos for maintenance purposes.
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-path',
+      'hrsh7th/cmp-buffer',
     },
     config = function()
       -- See `:help cmp`
@@ -82,9 +115,29 @@ return {
           -- For more advanced Luasnip keymaps (e.g. selecting choice nodes, expansion) see:
           --    https://github.com/L3MON4D3/LuaSnip?tab=readme-ov-file#keymaps
         },
+        formatting = {
+          format = function(entry, vim_item)
+            vim_item.kind = string.format('%s %s', cmp_kinds[vim_item.kind], vim_item.kind)
+            vim_item.menu = ({
+              nvim_lsp = '[Lsp]',
+              luasnip = '[Snp]',
+              buffer = '[Buf]',
+              path = '[Pth]',
+            })[entry.source.name]
+            return vim_item
+          end,
+        },
         sources = {
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
+          { name = 'nvim_lsp', priority = 10 },
+          { name = 'luasnip', priority = 9 },
+          {
+            name = 'buffer',
+            option = {
+              get_bufnrs = function()
+                return vim.api.nvim_list_bufs()
+              end,
+            },
+          },
           { name = 'path' },
         },
       }

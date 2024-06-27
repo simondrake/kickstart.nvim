@@ -17,10 +17,10 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 -- TIP: Disable arrow keys in normal mode
--- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
--- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
--- vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
--- vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
+vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
+vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
+vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
+vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -31,11 +31,11 @@ vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right win
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
-vim.keymap.set('n', '<leader>l', function()
+vim.keymap.set('n', '<leader>k', function()
   pcall(vim.cmd, 'cnext')
 end)
 
-vim.keymap.set('n', '<leader>k', function()
+vim.keymap.set('n', '<leader>j', function()
   pcall(vim.cmd, 'cprevious')
 end)
 
@@ -48,6 +48,13 @@ vim.keymap.set('n', 'TE', function()
 end)
 
 vim.keymap.set('n', '<leader>sd', function()
+  require('telescope.builtin').diagnostics {
+    severity = vim.diagnostic.severity.ERROR,
+    file_ignore_patterns = { '%_test.go' },
+  }
+end)
+
+vim.keymap.set('n', '<leader>sda', function()
   require('telescope.builtin').diagnostics {
     severity = vim.diagnostic.severity.ERROR,
   }
@@ -63,8 +70,18 @@ vim.keymap.set('n', 'gr', function()
   }
 end)
 
+-- don't exclude test files
+vim.keymap.set('n', 'gra', function()
+  require('telescope.builtin').lsp_references {
+    include_declaration = true,
+    show_line = false,
+  }
+end)
+
+-- search the current directory
 vim.keymap.set('n', 'gd', function()
   require('telescope.builtin').lsp_definitions {
+    show_line = false,
     -- jump_type = 'vsplit',
   }
 end)
@@ -83,12 +100,12 @@ vim.keymap.set('n', '<leader>fd', function()
   }
 end)
 
-vim.keymap.set('n', '<leader>t', function()
+vim.keymap.set('n', '`t', function()
   vim.cmd 'e ~/todo.md'
 end)
-vim.keymap.set('n', '<leader>n', function()
+vim.keymap.set('n', '`n', function()
   vim.cmd 'e ~/notes.md'
 end)
-vim.keymap.set('n', '<leader>j', function()
+vim.keymap.set('n', '`j', function()
   vim.cmd 'e ~/journal.md'
 end)

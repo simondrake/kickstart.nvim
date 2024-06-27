@@ -9,3 +9,7 @@ end, { nargs = '+' })
 vim.api.nvim_create_user_command('ToggleExport', function(_)
   require('toggle_export').ToggleExport()
 end, {})
+
+vim.api.nvim_create_user_command('Browse', function(opts)
+  vim.fn.system { 'xdg-open', opts.fargs[1] }
+end, { nargs = 1 })
