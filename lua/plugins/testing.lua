@@ -2,13 +2,7 @@ return {
   -- [[ testing ]]
   -- These may be deleted or may be moved to a proper section where they will have a home forever
   -- or, at least, until they outlive their usefulness
-  { 'rmagatti/goto-preview', opts = {
-    width = 240,
-    height = 30,
-    default_mappings = true,
-  } },
   { 'windwp/nvim-autopairs', event = 'InsertEnter', config = true },
-  -- { 'echasnovski/mini.nvim', version = false },
   {
     'catppuccin/nvim',
     name = 'catppuccin',
@@ -16,12 +10,6 @@ return {
     init = function()
       vim.cmd.colorscheme 'catppuccin-macchiato'
     end,
-  },
-  {
-    'nvim-treesitter/nvim-treesitter-context',
-    opts = {
-      enable = true,
-    },
   },
   {
     'smoka7/multicursors.nvim',

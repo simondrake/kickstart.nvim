@@ -109,6 +109,8 @@ return {
         return mod_name
       end
 
+      local navic = require 'nvim-navic'
+
       local servers = {
         -- markdownlint = {},
         bufls = {
@@ -130,6 +132,9 @@ return {
               gofumpt = true,
             },
           },
+          on_attach = function(client, bufnr)
+            navic.attach(client, bufnr)
+          end,
         },
         tsserver = {},
         lua_ls = {

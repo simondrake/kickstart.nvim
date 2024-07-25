@@ -2,5 +2,9 @@
   "subtest": {
     "prefix": "subtest",
     "body": ["t.Run(\"${1:Description}\", func(t *testing.T) {\n$2\n})"]
+  },
+  "if err != nil": {
+    "prefix": "iferr",
+    "body": ["if err != nil {", "\t${1}", "}"]
   }
 }

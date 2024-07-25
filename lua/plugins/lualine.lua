@@ -1,8 +1,14 @@
 return {
   {
+    'SmiteshP/nvim-navic',
+    requires = 'neovim/nvim-lspconfig',
+  },
+  {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons', 'SmiteshP/nvim-navic' },
     config = function()
+      local navic = require 'nvim-navic'
+
       require('lualine').setup {
         options = {
           icons_enabled = true,
@@ -33,6 +39,14 @@ return {
             --     separator = ' -> ',
             --   }
             -- end,
+            {
+              function()
+                return navic.get_location()
+              end,
+              cond = function()
+                return navic.is_available()
+              end,
+            },
           },
           lualine_x = { 'encoding', 'filetype' },
           lualine_y = { 'progress' },
