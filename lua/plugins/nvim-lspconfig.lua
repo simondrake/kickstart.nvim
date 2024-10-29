@@ -136,7 +136,7 @@ return {
             navic.attach(client, bufnr)
           end,
         },
-        tsserver = {},
+        -- tsserver = {},
         lua_ls = {
           settings = {
             Lua = {

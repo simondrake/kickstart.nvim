@@ -128,8 +128,8 @@ return {
           end,
         },
         sources = {
-          { name = 'nvim_lsp', priority = 10 },
-          { name = 'luasnip', priority = 9 },
+          { name = 'nvim_lsp', priority = 9 },
+          { name = 'luasnip', priority = 10 },
           {
             name = 'buffer',
             option = {
