@@ -21,3 +21,14 @@ end, { nargs = 0, range = true })
 vim.api.nvim_create_user_command('GBlameO', function(_)
   vim.fn.system { 'xdg-open', require('decorated_yank').blame_link() }
 end, { nargs = 0, range = true })
+
+vim.api.nvim_create_user_command('Jq', function(opts)
+  if opts.range == 0 then
+    vim.api.nvim_command '%!jq .'
+  else
+    local s_start = vim.fn.getpos "'<"
+    local s_end = vim.fn.getpos "'>"
+
+    vim.api.nvim_command(s_start[2] .. ',' .. s_end[2] .. '%!jq .')
+  end
+end, { nargs = 0, range = true, desc = 'Run jq formatting' })
