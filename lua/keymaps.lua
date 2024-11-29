@@ -89,7 +89,7 @@ end)
 -- Find files
 vim.keymap.set('n', '<leader>ff', function()
   require('telescope.builtin').find_files {
-    find_command = { 'ag', '--files-with-matches', '--ignore-case', '--skip-vcs-ignore', '--hidden', '--ignore', '.git' },
+    find_command = { 'ag', '--follow', '--files-with-matches', '--ignore-case', '--skip-vcs-ignore', '--hidden', '--ignore', '.git' },
   }
 end)
 -- File files in current directory

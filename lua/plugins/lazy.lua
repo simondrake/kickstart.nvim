@@ -8,51 +8,74 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-  -- 'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-  { 'numToStr/Comment.nvim', opts = {} },
   -- [[ Git ]]
-  {
-    'lewis6991/gitsigns.nvim',
-    opts = {
-      signs = {
-        add = { text = '+' },
-        change = { text = '~' },
-        delete = { text = '_' },
-        topdelete = { text = '‾' },
-        changedelete = { text = '~' },
-      },
-      on_attach = function(bufnr)
-        local function map(mode, lhs, rhs, opts)
-          opts = vim.tbl_extend('force', { noremap = true, silent = true }, opts or {})
-          vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-        end
-
-        -- Navigation
-        map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
-        map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
-      end,
-    },
-  },
   { 'tpope/vim-fugitive' },
   { 'tpope/vim-rhubarb' },
   { 'shumphrey/fugitive-gitlab.vim' },
 
-  -- [[ Theme ]]
-  -- {
-  --   'rebelot/kanagawa.nvim',
-  --   priority = 1000, -- Make sure to load this before all the other start plugins.
-  --   init = function()
-  --     vim.cmd.colorscheme 'kanagawa'
-  --     -- You can configure highlights by doing something like:
-  --     vim.cmd.hi 'Comment gui=none'
-  --   end,
-  -- },
+  -- [[ Theme]]
+  {
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000,
+    init = function()
+      vim.cmd.colorscheme 'catppuccin-macchiato'
+    end,
+  },
 
-  -- Highlight todo, notes, etc in comments
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  -- [[ Everything else ]]
+  {
+    'stevearc/oil.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require('oil').setup {
+        columns = { 'icon' },
+        keymaps = {
+          ['<C-h>'] = false,
+          ['<M-h>'] = false,
+        },
+        view_options = {
+          show_hidden = true,
+        },
+      }
 
-  { 'tpope/vim-sensible' },
-  -- { 'mg979/vim-visual-multi', branch = 'master' },
+      -- Open parent directory in current window
+      vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open parent directory' })
+
+      -- Open parent directory in floating window
+      vim.keymap.set('n', '<space>-', require('oil').toggle_float)
+    end,
+  },
+  {
+    'smoka7/multicursors.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'smoka7/hydra.nvim',
+    },
+    opts = {
+      hint_config = {
+        border = 'rounded',
+        position = 'bottom-right',
+      },
+      generate_hints = {
+        normal = true,
+        insert = true,
+        extend = true,
+        config = {
+          column_count = 1,
+        },
+      },
+    },
+    cmd = { 'MCstart', 'MCvisual', 'MCclear', 'MCpattern', 'MCvisualPattern', 'MCunderCursor' },
+    keys = {
+      {
+        mode = { 'v', 'n' },
+        '<Leader>m',
+        '<cmd>MCstart<cr>',
+        desc = 'Create a selection for selected text or word under the cursor',
+      },
+    },
+  },
   {
     'simondrake/decorated_yank',
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -87,6 +110,7 @@ require('lazy').setup({
   require 'plugins.localdev',
   require 'plugins.lualine',
   require 'plugins.testing',
+  require 'plugins.mini',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

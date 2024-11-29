@@ -113,10 +113,10 @@ return {
 
       local servers = {
         -- markdownlint = {},
-        bufls = {
-          cmd = { 'bufls', 'serve' },
-          filetypes = { 'proto' },
-        },
+        -- bufls = {
+        --   cmd = { 'bufls', 'serve' },
+        --   filetypes = { 'proto' },
+        -- },
         jsonls = {},
         terraformls = {},
         ['golangci-lint-langserver'] = {},

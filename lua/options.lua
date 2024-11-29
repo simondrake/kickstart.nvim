@@ -66,3 +66,8 @@ vim.opt.shiftwidth = 2
 vim.opt.backup = false
 vim.opt.swapfile = false
 vim.opt.undofile = true
+
+vim.opt.wrap = true
+
+-- Turn off diagnostics so we can use https://github.com/rachartier/tiny-inline-diagnostic.nvim
+vim.diagnostic.config { virtual_text = false }
