@@ -110,8 +110,6 @@ return {
         return mod_name
       end
 
-      local navic = require 'nvim-navic'
-
       local servers = {
         -- markdownlint = {},
         -- bufls = {
@@ -120,10 +118,19 @@ return {
         -- },
         jsonls = {},
         terraformls = {},
-        ['golangci-lint-langserver'] = {},
+        -- ['golangci_lint_ls'] = {
+        --   filetypes = { 'go', 'gomod' },
+        --   cmd = { 'golangci-lint-langserver' },
+        --   root_dir = require('lspconfig').util.root_pattern('.git', 'go.mod'),
+        --   init_options = {
+        --     command = { 'golangci-lint', 'run', '--enable', 'stylecheck', '--out-format', 'json', '--issues-exit-code=1' },
+        --   },
+        -- },
+        -- goimports = {},
+        -- gofumpt = {},
         gopls = {
           -- cmd = { "gopls", "-rpc.trace", "--debug=localhost:6060", "-logfile", "/tmp/gopls.log", "serve" },
-          -- cmd = { "gopls", "-rpc.trace", "-logfile", "/tmp/gopls.log", "serve" },
+          -- cmd = { 'gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log', 'serve' },
           -- cmd = { "gopls", "serve" },
           settings = {
             gopls = {
@@ -133,9 +140,6 @@ return {
               gofumpt = true,
             },
           },
-          on_attach = function(client, bufnr)
-            navic.attach(client, bufnr)
-          end,
         },
         -- tsserver = {},
         lua_ls = {

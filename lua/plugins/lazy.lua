@@ -8,6 +8,8 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
+  { 'tpope/vim-sleuth' },
+
   -- [[ Git ]]
   { 'tpope/vim-fugitive' },
   { 'tpope/vim-rhubarb' },
@@ -117,7 +119,9 @@ require('lazy').setup({
       -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
       -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
       -- See the full "keymap" documentation for information on defining your own keymap.
-      keymap = { preset = 'enter' },
+      keymap = {
+        preset = 'enter',
+      },
 
       completion = {
         accept = {

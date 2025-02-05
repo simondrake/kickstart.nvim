@@ -56,7 +56,7 @@ vim.opt.scrolloff = 10
 
 vim.opt.expandtab = true
 vim.opt.shiftround = true
-vim.opt.smartindent = true
+vim.opt.smartindent = false -- set to false when using treesitter indent
 vim.opt.autoindent = true
 
 vim.opt.tabstop = 2

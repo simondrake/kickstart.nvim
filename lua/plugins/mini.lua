@@ -33,6 +33,11 @@ return {
           goto_next = ']c',
           goto_last = '',
         },
+
+        options = {
+          -- Whether to wrap around edges during hunk navigation
+          wrap_goto = true,
+        },
       }
     end,
   },
@@ -115,7 +120,20 @@ return {
         -- Options which control module behavior
         options = {
           -- Function to compute custom 'commentstring' (optional)
-          custom_commentstring = nil,
+          custom_commentstring = function()
+            if vim.bo.filetype == 'rego' then
+              return '# %s'
+            end
+
+            if vim.bo.filetype == 'gomod' then
+              return '// %s'
+            end
+
+            -- uncomment to get the current filetype
+            -- print(vim.bo.filetype)
+
+            return vim.bo.commentstring
+          end,
 
           -- Whether to ignore blank lines when commenting
           ignore_blank_line = true,
