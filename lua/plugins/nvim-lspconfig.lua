@@ -111,33 +111,35 @@ return {
       end
 
       local servers = {
-        -- markdownlint = {},
-        -- bufls = {
-        --   cmd = { 'bufls', 'serve' },
-        --   filetypes = { 'proto' },
-        -- },
         jsonls = {},
         terraformls = {},
-        -- ['golangci_lint_ls'] = {
-        --   filetypes = { 'go', 'gomod' },
-        --   cmd = { 'golangci-lint-langserver' },
-        --   root_dir = require('lspconfig').util.root_pattern('.git', 'go.mod'),
-        --   init_options = {
-        --     command = { 'golangci-lint', 'run', '--enable', 'stylecheck', '--out-format', 'json', '--issues-exit-code=1' },
-        --   },
-        -- },
-        -- goimports = {},
-        -- gofumpt = {},
         gopls = {
           -- cmd = { "gopls", "-rpc.trace", "--debug=localhost:6060", "-logfile", "/tmp/gopls.log", "serve" },
           -- cmd = { 'gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log', 'serve' },
           -- cmd = { "gopls", "serve" },
           settings = {
             gopls = {
+              gofumpt = true,
+              staticcheck = true,
+              analyses = {
+                -- appends = true,
+                -- assign = true,
+                -- atomic = true,
+                -- bools = true,
+                -- defers = true,
+                -- deprecated = true,
+                -- errorsas = true,
+                -- nilness = true,
+                -- useany = true,
+                -- shadow = true,
+                unusedparams = true,
+                -- unusedwrite = true,
+                -- unusedvariable = true,
+                -- unusedfunc = true,
+              },
               -- completionBudget = '0',
               buildFlags = { '-tags=integration,smoke' },
               ['local'] = get_current_gomod(),
-              gofumpt = true,
             },
           },
         },
