@@ -27,6 +27,13 @@ require('lazy').setup({
 
   -- [[ Everything else ]]
   {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    config = true,
+    -- use opts = {} for passing setup options
+    -- this is equivalent to setup({}) function
+  },
+  {
     'stevearc/oil.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
@@ -100,101 +107,6 @@ require('lazy').setup({
       parse = { enabled = true },
     },
   },
-  {
-    'saghen/blink.cmp',
-    -- optional: provides snippets for the snippet source
-    dependencies = {
-      {
-        'L3MON4D3/LuaSnip',
-        build = (function()
-          -- Build Step is needed for regex support in snippets.
-          -- This step is not supported in many windows environments.
-          -- Remove the below condition to re-enable on windows.
-          if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
-            return
-          end
-          return 'make install_jsregexp'
-        end)(),
-        dependencies = {
-          -- `friendly-snippets` contains a variety of premade snippets.
-          --    See the README about individual language/framework/plugin snippets:
-          --    https://github.com/rafamadriz/friendly-snippets
-          {
-            'rafamadriz/friendly-snippets',
-            config = function()
-              require('luasnip.loaders.from_vscode').lazy_load()
-            end,
-          },
-        },
-        -- Custom snippets
-        config = function()
-          require('luasnip.loaders.from_vscode').lazy_load { paths = '~/.config/nvim/my_snippets' }
-        end,
-      },
-    },
-
-    -- use a release tag to download pre-built binaries
-    version = '*',
-    -- AND/OR build from source, requires nightly: https://rust-lang.github.io/rustup/concepts/channels.html#working-with-nightly-rust
-    -- build = 'cargo build --release',
-    -- If you use nix, you can build from source using latest nightly rust with:
-    -- build = 'nix run .#build-plugin',
-
-    ---@module 'blink.cmp'
-    ---@type blink.cmp.Config
-    opts = {
-      -- 'default' for mappings similar to built-in completion
-      -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-      -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-      -- See the full "keymap" documentation for information on defining your own keymap.
-      keymap = {
-        preset = 'enter',
-      },
-
-      completion = {
-        accept = {
-          -- experimental auto-brackets support
-          auto_brackets = {
-            enabled = true,
-          },
-        },
-        menu = {
-          draw = {
-            treesitter = { 'lsp' },
-          },
-        },
-
-        -- 'prefix' will fuzzy match on the text before the cursor
-        -- 'full' will fuzzy match on the text before *and* after the cursor
-        -- example: 'foo_|_bar' will match 'foo_' for 'prefix' and 'foo__bar' for 'full'
-        keyword = { range = 'full' },
-
-        -- Show documentation when selecting a completion item
-        documentation = { auto_show = true, auto_show_delay_ms = 200 },
-
-        -- Display a preview of the selected item on the current line
-        ghost_text = { enabled = false },
-      },
-
-      -- experimental signature help support
-      signature = { enabled = true },
-
-      appearance = {
-        nerd_font_variant = 'mono',
-      },
-
-      snippets = { preset = 'luasnip' },
-
-      -- Default list of enabled providers defined so that you can extend it
-      -- elsewhere in your config, without redefining it, due to `opts_extend`
-      sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
-        -- Disable cmdline completions
-        cmdline = {},
-      },
-    },
-    opts_extend = { 'sources.default' },
-  },
 
   require 'plugins.telescope',
   require 'plugins.conform-nvim',
@@ -203,10 +115,11 @@ require('lazy').setup({
   require 'plugins.debug',
   require 'plugins.indent_line',
   require 'plugins.lint',
-  require 'plugins.localdev',
   require 'plugins.lualine',
-  require 'plugins.testing',
   require 'plugins.mini',
+  require 'plugins.blink',
+  require 'plugins.testing',
+  require 'plugins.localdev',
 }, {
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the

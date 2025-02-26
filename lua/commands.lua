@@ -19,7 +19,7 @@ vim.api.nvim_create_user_command('GBlame', function(_)
 end, { nargs = 0, range = true })
 
 vim.api.nvim_create_user_command('GBlameO', function(_)
-  vim.fn.system { 'xdg-open', require('decorated_yank').blame_link() }
+  vim.ui.open(require('decorated_yank').blame_link_raw())
 end, { nargs = 0, range = true })
 
 vim.api.nvim_create_user_command('Jq', function(opts)
