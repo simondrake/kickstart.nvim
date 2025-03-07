@@ -1,8 +1,48 @@
 return {
+  -- {
+  --   'github/copilot.vim',
+  --   cmd = 'Copilot',
+  --   event = 'BufWinEnter',
+  -- },
+  -- {
+  --   'saghen/blink.cmp',
+  --   dependencies = { 'fang2hou/blink-copilot' },
+  --   opts = {
+  --     sources = {
+  --       default = { 'copilot' },
+  --       providers = {
+  --         copilot = {
+  --           name = 'copilot',
+  --           module = 'blink-copilot',
+  --           score_offset = 100,
+  --           async = true,
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
+  {
+    'github/copilot.vim',
+    cmd = 'Copilot',
+    event = 'BufWinEnter',
+    init = function()
+      vim.g.copilot_no_maps = true
+    end,
+    -- config = function()
+    --   -- Block the normal Copilot suggestions
+    --   vim.api.nvim_create_augroup('github_copilot', { clear = true })
+    --   vim.api.nvim_create_autocmd({ 'FileType', 'BufUnload', 'BufEnter' }, {
+    --     group = 'github_copilot',
+    --     callback = function(args)
+    --       vim.fn['copilot#On' .. args.event]()
+    --     end,
+    --   })
+    -- end,
+  },
   {
     'saghen/blink.cmp',
-    -- optional: provides snippets for the snippet source
     dependencies = {
+      'fang2hou/blink-copilot',
       {
         'L3MON4D3/LuaSnip',
         build = (function()
@@ -45,12 +85,17 @@ return {
       end,
 
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer' },
+        default = { 'lsp', 'path', 'snippets', 'buffer', 'copilot' },
+        providers = {
+          copilot = {
+            name = 'copilot',
+            module = 'blink-copilot',
+            score_offset = 100,
+            async = true,
+          },
+        },
       },
-      cmdline = {
-        -- Disable cmdline completions
-        sources = {},
-      },
+      cmdline = {},
 
       -- 'default' for mappings similar to built-in completion
       -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)

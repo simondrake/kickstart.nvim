@@ -100,6 +100,13 @@ vim.keymap.set('n', '<leader>fd', function()
   }
 end)
 
+-- Live grep
+vim.keymap.set('n', '<leader>fg', function()
+  require('telescope.builtin').live_grep {
+    find_command = { 'ag', '--follow', '--skip-vcs-ignore', '--hidden', '--ignore', '.git' },
+  }
+end)
+
 vim.keymap.set('n', '`t', function()
   vim.cmd 'e ~/todo.md'
 end)
