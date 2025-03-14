@@ -114,7 +114,7 @@ return {
         jsonls = {},
         terraformls = {},
         gopls = {
-          -- cmd = { "gopls", "-rpc.trace", "--debug=localhost:6060", "-logfile", "/tmp/gopls.log", "serve" },
+          -- cmd = { 'gopls', '-rpc.trace', '--debug=localhost:6060', '-logfile', '/tmp/gopls.log', 'serve' },
           -- cmd = { 'gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log', 'serve' },
           -- cmd = { "gopls", "serve" },
           settings = {

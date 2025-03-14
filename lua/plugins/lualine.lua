@@ -1,3 +1,39 @@
+local function current_node()
+  -- Only continue if treesitter has an active parser
+  -- avoids the "no parser for language error"
+  local buf = vim.api.nvim_get_current_buf()
+  local highlighter = require 'vim.treesitter.highlighter'
+
+  if not highlighter.active[buf] then
+    return ''
+  end
+
+  local current_node = vim.treesitter.get_node()
+
+  if not current_node then
+    return ''
+  end
+
+  local expr = current_node
+
+  while expr do
+    if expr:type() == 'type_spec' or expr:type() == 'function_declaration' or expr:type() == 'method_declaration' then
+      break
+    end
+    expr = expr:parent()
+  end
+
+  if not expr then
+    return ''
+  end
+
+  if #expr:field 'name' == 0 then
+    return ''
+  end
+
+  return vim.treesitter.get_node_text(expr:field('name')[1], 0)
+end
+
 return {
   {
     'nvim-lualine/lualine.nvim',
@@ -5,6 +41,7 @@ return {
     config = function()
       require('lualine').setup {
         options = {
+          always_show_tabline = false,
           icons_enabled = true,
           disabled_filetypes = {},
         },
@@ -23,6 +60,7 @@ return {
               file_status = false, -- displays file status (readonly status, modified status)
               path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
             },
+            current_node,
           },
           lualine_x = { 'encoding', 'filetype' },
           lualine_y = { 'progress' },

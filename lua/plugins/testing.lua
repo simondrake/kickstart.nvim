@@ -2,12 +2,17 @@ return {
   -- [[ testing ]]
   -- These may be deleted or may be moved to a proper section where they will have a home forever
   -- or, at least, until they outlive their usefulness
-
   {
     'folke/flash.nvim',
     event = 'VeryLazy',
     ---@type Flash.Config
-    opts = {},
+    -- opts = {
+    --   modes = {
+    --     char = {
+    --       jump_labels = true,
+    --     },
+    --   },
+    -- },
     -- stylua: ignore
     keys = {
       { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
@@ -15,56 +20,6 @@ return {
       { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
       { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
       { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
-    },
-  },
-  {
-    'Bekaboo/dropbar.nvim',
-    -- dev = true,
-    dependencies = {
-      'nvim-tree/nvim-web-devicons',
-    },
-    opts = {
-      bar = {
-        enable = function(buf, win, _)
-          local ft = vim.bo[buf].ft
-
-          if
-            not vim.api.nvim_buf_is_valid(buf)
-            or not vim.api.nvim_win_is_valid(win)
-            or vim.fn.win_gettype(win) ~= ''
-            or vim.wo[win].winbar ~= ''
-            or ft == 'help'
-            or ft == 'noice'
-            or ft == 'dashboard'
-          then
-            return false
-          end
-
-          local stat = vim.uv.fs_stat(vim.api.nvim_buf_get_name(buf))
-          if stat and stat.size > 1024 * 1024 then
-            return false
-          end
-
-          return true
-        end,
-      },
-      sources = {
-        path = {
-          max_depth = 16,
-        },
-        -- treesitter = {
-        --     max_depth = 0,
-        -- },
-        -- lsp = {
-        --     max_depth = 0,
-        -- },
-        -- markdown = {
-        --     max_depth = 0,
-        -- },
-        -- terminal = {
-        --     show_current = false,
-        -- },
-      },
     },
   },
   {
