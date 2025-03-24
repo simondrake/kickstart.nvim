@@ -111,6 +111,21 @@ return {
       end
 
       local servers = {
+        harper_ls = {
+          enabled = true,
+          filetypes = { 'markdown' },
+          settings = {
+            ['harper-ls'] = {
+              userDictPath = '~/.config/nvim/en-utf-8.add',
+              linters = {
+                ToDoHyphen = false,
+                SentenceCapitalization = true,
+                SpellCheck = true,
+              },
+              isolateEnglish = true,
+            },
+          },
+        },
         jsonls = {},
         terraformls = {},
         gopls = {

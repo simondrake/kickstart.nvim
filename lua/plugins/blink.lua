@@ -1,8 +1,23 @@
 return {
   -- {
   --   'github/copilot.vim',
+  --   version = 'v1.42.0',
   --   cmd = 'Copilot',
   --   event = 'BufWinEnter',
+  --   init = function()
+  --     vim.g.copilot_no_maps = true
+  --   end,
+  --   -- config = function()
+  --   --   -- Block the normal Copilot suggestions
+  --   --   vim.api.nvim_create_augroup('github_copilot', { clear = true })
+  --   --   vim.api.nvim_create_autocmd({ 'FileType', 'BufUnload' }, {
+  --   --     group = 'github_copilot',
+  --   --     callback = function(args)
+  --   --       vim.fn['copilot#On' .. args.event]()
+  --   --     end,
+  --   --   })
+  --   --   vim.fn['copilot#OnFileType']()
+  --   -- end,
   -- },
   -- {
   --   'saghen/blink.cmp',
@@ -96,6 +111,8 @@ return {
         -- },
       },
       cmdline = {},
+
+      fuzzy = { implementation = 'prefer_rust_with_warning' },
 
       -- 'default' for mappings similar to built-in completion
       -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
