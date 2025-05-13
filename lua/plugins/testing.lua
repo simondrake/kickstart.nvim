@@ -3,21 +3,6 @@ return {
   -- These may be deleted or may be moved to a proper section where they will have a home forever
   -- or, at least, until they outlive their usefulness
   {
-    'akinsho/toggleterm.nvim',
-    version = '*',
-    config = function()
-      local toggleterm = require 'toggleterm'
-
-      toggleterm.setup {
-        open_mapping = [[<c-t>]],
-        hide_number = true,
-        start_in_insert = true,
-        direction = 'float', -- vertical | float | tab
-      }
-    end,
-  },
-
-  {
     'folke/flash.nvim',
     event = 'VeryLazy',
     ---@type Flash.Config

@@ -88,6 +88,7 @@ require('lazy').setup({
   require 'plugins.lualine',
   require 'plugins.mini',
   require 'plugins.blink',
+  require 'plugins.ai',
   require 'plugins.testing',
   require 'plugins.localdev',
 }, {

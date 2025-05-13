@@ -1,63 +1,7 @@
 return {
-  -- {
-  --   'github/copilot.vim',
-  --   version = 'v1.42.0',
-  --   cmd = 'Copilot',
-  --   event = 'BufWinEnter',
-  --   init = function()
-  --     vim.g.copilot_no_maps = true
-  --   end,
-  --   -- config = function()
-  --   --   -- Block the normal Copilot suggestions
-  --   --   vim.api.nvim_create_augroup('github_copilot', { clear = true })
-  --   --   vim.api.nvim_create_autocmd({ 'FileType', 'BufUnload' }, {
-  --   --     group = 'github_copilot',
-  --   --     callback = function(args)
-  --   --       vim.fn['copilot#On' .. args.event]()
-  --   --     end,
-  --   --   })
-  --   --   vim.fn['copilot#OnFileType']()
-  --   -- end,
-  -- },
-  -- {
-  --   'saghen/blink.cmp',
-  --   dependencies = { 'fang2hou/blink-copilot' },
-  --   opts = {
-  --     sources = {
-  --       default = { 'copilot' },
-  --       providers = {
-  --         copilot = {
-  --           name = 'copilot',
-  --           module = 'blink-copilot',
-  --           score_offset = 100,
-  --           async = true,
-  --         },
-  --       },
-  --     },
-  --   },
-  -- },
-  -- {
-  --   'github/copilot.vim',
-  --   cmd = 'Copilot',
-  --   event = 'BufWinEnter',
-  --   init = function()
-  --     vim.g.copilot_no_maps = true
-  --   end,
-  --   config = function()
-  --     -- Block the normal Copilot suggestions
-  --     vim.api.nvim_create_augroup('github_copilot', { clear = true })
-  --     vim.api.nvim_create_autocmd({ 'FileType', 'BufUnload', 'BufEnter' }, {
-  --       group = 'github_copilot',
-  --       callback = function(args)
-  --         vim.fn['copilot#On' .. args.event]()
-  --       end,
-  --     })
-  --   end,
-  -- },
   {
     'saghen/blink.cmp',
     dependencies = {
-      'fang2hou/blink-copilot',
       {
         'L3MON4D3/LuaSnip',
         build = (function()
@@ -101,14 +45,7 @@ return {
 
       sources = {
         default = { 'lsp', 'path', 'snippets', 'buffer' },
-        -- providers = {
-        --   copilot = {
-        --     name = 'copilot',
-        --     module = 'blink-copilot',
-        --     score_offset = 100,
-        --     async = true,
-        --   },
-        -- },
+        providers = {},
       },
       cmdline = {},
 
