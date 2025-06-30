@@ -78,7 +78,8 @@ require('lazy').setup({
     },
   },
 
-  require 'plugins.telescope',
+  -- require 'plugins.telescope',
+  require 'plugins.snacks',
   require 'plugins.conform-nvim',
   require 'plugins.nvim-lspconfig',
   require 'plugins.nvim-treesitter',

@@ -47,66 +47,6 @@ vim.keymap.set('n', 'TE', function()
   require('toggle_export').ToggleExport()
 end)
 
-vim.keymap.set('n', '<leader>sd', function()
-  require('telescope.builtin').diagnostics {
-    severity = vim.diagnostic.severity.ERROR,
-    file_ignore_patterns = { '%_test.go' },
-  }
-end)
-
-vim.keymap.set('n', '<leader>sda', function()
-  require('telescope.builtin').diagnostics {
-    severity = vim.diagnostic.severity.ERROR,
-  }
-end)
-
--- Find references for the word under your cursor.
--- exclude test files
-vim.keymap.set('n', 'gr', function()
-  require('telescope.builtin').lsp_references {
-    file_ignore_patterns = { '%_test.go' },
-    include_declaration = true,
-    show_line = false,
-  }
-end)
-
--- don't exclude test files
-vim.keymap.set('n', 'gra', function()
-  require('telescope.builtin').lsp_references {
-    include_declaration = true,
-    show_line = false,
-  }
-end)
-
--- search the current directory
-vim.keymap.set('n', 'gd', function()
-  require('telescope.builtin').lsp_definitions {
-    show_line = false,
-    -- jump_type = 'vsplit',
-  }
-end)
-
--- Find files
-vim.keymap.set('n', '<leader>ff', function()
-  require('telescope.builtin').find_files {
-    find_command = { 'ag', '--follow', '--files-with-matches', '--ignore-case', '--skip-vcs-ignore', '--hidden', '--ignore', '.git' },
-  }
-end)
--- File files in current directory
-vim.keymap.set('n', '<leader>fd', function()
-  require('telescope.builtin').find_files {
-    find_command = { 'ag', '--files-with-matches', '--ignore-case', '--skip-vcs-ignore', '--hidden', '--ignore', '.git' },
-    cwd = require('telescope.utils').buffer_dir(),
-  }
-end)
-
--- Live grep
-vim.keymap.set('n', '<leader>fg', function()
-  require('telescope.builtin').live_grep {
-    find_command = { 'ag', '--follow', '--skip-vcs-ignore', '--hidden', '--ignore', '.git' },
-  }
-end)
-
 vim.keymap.set('n', '`t', function()
   vim.cmd 'e ~/todo.md'
 end)
