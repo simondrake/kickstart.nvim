@@ -2,18 +2,11 @@ return {
   {
     'neovim/nvim-lspconfig',
     dependencies = {
-      -- Automatically install LSPs and related tools to stdpath for Neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'saghen/blink.cmp',
-
-      -- Useful status updates for LSP.
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
-
-      -- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
-      -- used for completion, annotations and signatures of Neovim apis
       { 'folke/neodev.nvim', opts = {} },
     },
     config = function()
@@ -85,21 +78,6 @@ return {
       end
 
       local servers = {
-        harper_ls = {
-          enabled = true,
-          filetypes = { 'markdown' },
-          settings = {
-            ['harper-ls'] = {
-              userDictPath = '~/.config/nvim/en-utf-8.add',
-              linters = {
-                ToDoHyphen = false,
-                SentenceCapitalization = true,
-                SpellCheck = true,
-              },
-              isolateEnglish = true,
-            },
-          },
-        },
         jsonls = {},
         terraformls = {},
         gopls = {
@@ -111,20 +89,7 @@ return {
               gofumpt = true,
               staticcheck = true,
               analyses = {
-                -- appends = true,
-                -- assign = true,
-                -- atomic = true,
-                -- bools = true,
-                -- defers = true,
-                -- deprecated = true,
-                -- errorsas = true,
-                -- nilness = true,
-                -- useany = true,
-                -- shadow = true,
                 unusedparams = true,
-                -- unusedwrite = true,
-                -- unusedvariable = true,
-                -- unusedfunc = true,
               },
               -- completionBudget = '0',
               buildFlags = { '-tags=integration,smoke' },
@@ -132,7 +97,6 @@ return {
             },
           },
         },
-        -- tsserver = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -162,18 +126,13 @@ return {
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-      require('mason-lspconfig').setup {
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This handles overriding only values explicitly passed
-            -- by the server configuration above. Useful when disabling
-            -- certain features of an LSP (for example, turning off formatting for tsserver)
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
-          end,
-        },
-      }
+      for server_name, server in pairs(servers) do
+        -- This is where you can override the default LSP settings for each server.
+        --  For example, you can set the cmd, filetypes, root_dir, etc.
+        --  See `:help lspconfig-server-name` for more information about each server.
+        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+        require('lspconfig')[server_name].setup(server)
+      end
     end,
   },
 }

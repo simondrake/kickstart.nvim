@@ -22,6 +22,10 @@ vim.api.nvim_create_user_command('GBlameO', function(_)
   vim.ui.open(require('decorated_yank').blame_link_raw())
 end, { nargs = 0, range = true })
 
+vim.api.nvim_create_user_command('Hacker', function(_)
+  vim.api.nvim_command 'color alpha-green'
+end, { nargs = 0, range = true })
+
 vim.api.nvim_create_user_command('Jq', function(opts)
   if opts.range == 0 then
     vim.api.nvim_command '%!jq .'

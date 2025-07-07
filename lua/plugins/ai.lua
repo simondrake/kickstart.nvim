@@ -4,7 +4,7 @@ return {
     -- event = 'InsertEnter',
     opts = {
       suggestion = {
-        auto_trigger = false,
+        auto_trigger = true,
         hide_during_completion = false,
         keymap = {
           accept = false,
@@ -30,6 +30,12 @@ return {
       { 'nvim-lua/plenary.nvim', branch = 'master' }, -- for curl, log and async functions
     },
     build = 'make tiktoken', -- Only on MacOS or Linux
-    opts = {},
+    opts = {
+      -- default providers
+      -- see config/providers.lua for implementation
+      providers = {
+        copilot = {},
+      },
+    },
   },
 }
