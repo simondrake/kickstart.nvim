@@ -142,6 +142,21 @@ return {
             include_current = false,
             auto_confirm = true,
             jump = { tagstack = true, reuse_win = true },
+            pattern = '!_test.go',
+          }
+        end,
+        desc = '[G]et [r]eferences',
+      },
+      {
+        'gra',
+        function()
+          Snacks.picker.lsp_references {
+            finder = 'lsp_references',
+            format = 'file',
+            include_declaration = true,
+            include_current = false,
+            auto_confirm = true,
+            jump = { tagstack = true, reuse_win = true },
           }
         end,
         desc = '[G]et [r]eferences',
