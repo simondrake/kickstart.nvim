@@ -82,7 +82,7 @@ return {
         terraformls = {},
         gopls = {
           -- cmd = { 'gopls', '-rpc.trace', '--debug=localhost:6060', '-logfile', '/tmp/gopls.log', 'serve' },
-          -- cmd = { 'gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log', 'serve' },
+          cmd = { 'gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log', 'serve' },
           -- cmd = { "gopls", "serve" },
           settings = {
             gopls = {
@@ -126,13 +126,19 @@ return {
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
-      for server_name, server in pairs(servers) do
-        -- This is where you can override the default LSP settings for each server.
-        --  For example, you can set the cmd, filetypes, root_dir, etc.
-        --  See `:help lspconfig-server-name` for more information about each server.
-        server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-        require('lspconfig')[server_name].setup(server)
-      end
+      require('mason-lspconfig').setup {
+        handlers = {
+          function(server_name)
+            local server = servers[server_name] or {}
+            -- This is where you can override the default LSP settings for each server.
+            --  For example, you can set the cmd, filetypes, root_dir, etc.
+            --  See `:help vim.lsp.config` for more information about each server.
+            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
+            vim.lsp.config[server_name] = server
+            vim.lsp.enable(server_name)
+          end,
+        },
+      }
     end,
   },
 }
