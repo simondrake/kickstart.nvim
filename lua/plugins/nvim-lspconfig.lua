@@ -80,6 +80,7 @@ return {
       local servers = {
         jsonls = {},
         terraformls = {},
+        rust_analyzer = {},
         gopls = {
           -- cmd = { 'gopls', '-rpc.trace', '--debug=localhost:6060', '-logfile', '/tmp/gopls.log', 'serve' },
           cmd = { 'gopls', '-rpc.trace', '-logfile', '/tmp/gopls.log', 'serve' },
@@ -118,27 +119,23 @@ return {
       --  You can press `g?` for help in this menu.
       require('mason').setup()
 
-      -- You can add other tools here that you want Mason to install
-      -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
       })
-      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
       require('mason-lspconfig').setup {
-        handlers = {
-          function(server_name)
-            local server = servers[server_name] or {}
-            -- This is where you can override the default LSP settings for each server.
-            --  For example, you can set the cmd, filetypes, root_dir, etc.
-            --  See `:help vim.lsp.config` for more information about each server.
-            server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            vim.lsp.config[server_name] = server
-            vim.lsp.enable(server_name)
-          end,
-        },
+        automatic_enable = vim.tbl_keys(servers or {}),
       }
+
+      require('mason-tool-installer').setup { ensure_installed = ensure_installed }
+
+      for server_name, config in pairs(servers) do
+        vim.lsp.config(server_name, config)
+      end
+
+      -- NOTE: Some servers may require an old setup until they are updated. For the full list refer here: https://github.com/neovim/nvim-lspconfig/issues/3705
+      -- These servers will have to be manually set up with require("lspconfig").server_name.setup{}
     end,
   },
 }
