@@ -19,7 +19,7 @@ return {
         markdown = { 'prettier' },
         sh = { 'shfmt', 'shellharden' },
         yaml = { 'prettier' },
-        javascript = { { 'prettierd', 'prettier' } },
+        javascript = { 'prettierd', 'prettier', stop_after_first = true },
         -- Use the "*" filetype to run formatters on all filetypes.
         ['*'] = { 'codespell', 'trim_whitespace' },
       },
