@@ -36,3 +36,7 @@ vim.api.nvim_create_user_command('Jq', function(opts)
     vim.api.nvim_command(s_start[2] .. ',' .. s_end[2] .. '%!jq .')
   end
 end, { nargs = 0, range = true, desc = 'Run jq formatting' })
+
+vim.api.nvim_create_user_command('CopyFilepath', function(_)
+  vim.cmd "let @+=expand('%:p')"
+end, { nargs = 0, range = false, desc = 'Copy current file path to clipboard' })
