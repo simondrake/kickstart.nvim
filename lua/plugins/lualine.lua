@@ -1,12 +1,16 @@
 local function current_node()
-  -- Only continue if treesitter has an active parser
-  -- avoids the "no parser for language error"
   local buf = vim.api.nvim_get_current_buf()
   local highlighter = require 'vim.treesitter.highlighter'
 
   if not highlighter.active[buf] then
     return ''
   end
+
+  local ok, parser = pcall(vim.treesitter.get_parser, buf)
+  if not ok or not parser then
+    return ''
+  end
+  parser:parse()
 
   local current_node = vim.treesitter.get_node()
 

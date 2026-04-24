@@ -69,5 +69,7 @@ vim.opt.undofile = true
 
 vim.opt.wrap = true
 
--- Turn off diagnostics so we can use https://github.com/rachartier/tiny-inline-diagnostic.nvim
-vim.diagnostic.config { virtual_text = false }
+vim.diagnostic.config {
+  virtual_text = false,
+  virtual_lines = { current_line = true },
+}

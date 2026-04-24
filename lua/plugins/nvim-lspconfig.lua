@@ -7,7 +7,7 @@ return {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
       'saghen/blink.cmp',
       { 'j-hui/fidget.nvim', opts = {} },
-      { 'folke/neodev.nvim', opts = {} },
+      { 'folke/lazydev.nvim', ft = 'lua', opts = {} },
     },
     config = function()
       vim.api.nvim_create_autocmd('LspAttach', {
@@ -17,25 +17,8 @@ return {
             vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
-          -- Rename the variable under your cursor.
-          --  Most Language Servers support renaming across files, etc.
           map('R', vim.lsp.buf.rename, '[R]e[n]ame')
-
-          -- Get signature help
-          vim.keymap.set('i', '<c-y>', vim.lsp.buf.signature_help, { buffer = event.buf, desc = 'LSP: ' .. 'Signature Help' })
-
           map('<leader>of', vim.diagnostic.open_float, '[O]pen [F]loat')
-
-          -- Execute a code action, usually your cursor needs to be on top of an error
-          -- or a suggestion from your LSP for this to activate.
-          map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-
-          -- Opens a popup that displays documentation about the word under your cursor
-          --  See `:help K` for why this keymap.
-          map('K', vim.lsp.buf.hover, 'Hover Documentation')
-
-          -- WARN: This is not Goto Definition, this is Goto Declaration.
-          --  For example, in C this would take you to the header.
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- The following two autocommands are used to highlight references of the
@@ -43,8 +26,8 @@ return {
           --    See `:help CursorHold` for information about when this is executed
           --
           -- When you move your cursor, the highlights will be cleared (the second autocommand).
-          local client = vim.lsp.get_client_by_id(event.data.client_id)
-          if client and client.server_capabilities.documentHighlightProvider then
+          local client = vim.lsp.get_clients({ id = event.data.client_id })[1]
+          if client and client:supports_method('textDocument/documentHighlight', event.buf) then
             vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
               buffer = event.buf,
               callback = vim.lsp.buf.document_highlight,
@@ -105,7 +88,7 @@ return {
                 callSnippet = 'Replace',
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              diagnostics = { disable = { 'missing-fields' }, globals = { 'vim' } },
+              diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },

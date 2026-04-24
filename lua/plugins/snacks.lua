@@ -133,7 +133,7 @@ return {
         desc = '[S]earch [d]iagnostics ([a]ll)',
       },
       {
-        'gr',
+        'grr',
         function()
           Snacks.picker.lsp_references {
             finder = 'lsp_references',
@@ -145,10 +145,10 @@ return {
             pattern = '!_test.go',
           }
         end,
-        desc = '[G]et [r]eferences',
+        desc = '[G]et [r]eferences (filtered)',
       },
       {
-        'gra',
+        'grR',
         function()
           Snacks.picker.lsp_references {
             finder = 'lsp_references',
@@ -159,7 +159,7 @@ return {
             jump = { tagstack = true, reuse_win = true },
           }
         end,
-        desc = '[G]et [r]eferences',
+        desc = '[G]et [r]eferences (all)',
       },
       {
         '<leader>lg',
