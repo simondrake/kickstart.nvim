@@ -13,6 +13,7 @@ require('lazy').setup({
   -- [[ Git ]]
   {
     'simondrake/nvim-review',
+    dependencies = { 'simondrake/decorated_yank' },
     config = function()
       require('nvim-review').setup()
     end,
