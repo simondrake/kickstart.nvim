@@ -6,7 +6,7 @@ return {
     config = function()
       require('nvim-treesitter').install {
         'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc',
-        'go', 'rust', 'dockerfile', 'proto', 'json', 'yaml',
+        'go', 'rust', 'dockerfile', 'proto', 'json', 'yaml', 'git_rebase',
       }
 
       vim.api.nvim_create_autocmd('FileType', {
