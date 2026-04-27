@@ -1,41 +1,46 @@
 local function current_node()
-  local buf = vim.api.nvim_get_current_buf()
-  local highlighter = require 'vim.treesitter.highlighter'
+  local ok, result = pcall(function()
+    local buf = vim.api.nvim_get_current_buf()
+    local highlighter = require 'vim.treesitter.highlighter'
 
-  if not highlighter.active[buf] then
-    return ''
-  end
-
-  local ok, parser = pcall(vim.treesitter.get_parser, buf)
-  if not ok or not parser then
-    return ''
-  end
-  parser:parse()
-
-  local current_node = vim.treesitter.get_node()
-
-  if not current_node then
-    return ''
-  end
-
-  local expr = current_node
-
-  while expr do
-    if expr:type() == 'type_spec' or expr:type() == 'function_declaration' or expr:type() == 'method_declaration' then
-      break
+    if not highlighter.active[buf] then
+      return ''
     end
-    expr = expr:parent()
-  end
 
-  if not expr then
+    local parser = vim.treesitter.get_parser(buf)
+    if not parser then
+      return ''
+    end
+    parser:parse()
+
+    local node = vim.treesitter.get_node()
+    if not node then
+      return ''
+    end
+
+    local expr = node
+    while expr do
+      if expr:type() == 'type_spec' or expr:type() == 'function_declaration' or expr:type() == 'method_declaration' then
+        break
+      end
+      expr = expr:parent()
+    end
+
+    if not expr then
+      return ''
+    end
+
+    if #expr:field 'name' == 0 then
+      return ''
+    end
+
+    return vim.treesitter.get_node_text(expr:field('name')[1], 0)
+  end)
+
+  if not ok then
     return ''
   end
-
-  if #expr:field 'name' == 0 then
-    return ''
-  end
-
-  return vim.treesitter.get_node_text(expr:field('name')[1], 0)
+  return result
 end
 
 return {

@@ -12,7 +12,7 @@ return {
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
-        json = { 'prettier' },
+        json = {},
         markdown = { 'prettier' },
         sh = { 'shfmt', 'shellharden' },
         yaml = { 'prettier' },

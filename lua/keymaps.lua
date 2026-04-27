@@ -30,11 +30,17 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 vim.keymap.set('n', '<leader>k', function()
-  pcall(vim.cmd, 'cnext')
+  local review = require 'nvim-review'
+  if not review.is_open() or not review.navigate(1) then
+    pcall(vim.cmd, 'cnext')
+  end
 end)
 
 vim.keymap.set('n', '<leader>j', function()
-  pcall(vim.cmd, 'cprevious')
+  local review = require 'nvim-review'
+  if not review.is_open() or not review.navigate(-1) then
+    pcall(vim.cmd, 'cprevious')
+  end
 end)
 
 vim.keymap.set('v', '<C-y>', function()

@@ -11,9 +11,12 @@ require('lazy').setup({
   { 'tpope/vim-sleuth' },
 
   -- [[ Git ]]
-  { 'tpope/vim-fugitive' },
-  { 'tpope/vim-rhubarb' },
-  { 'shumphrey/fugitive-gitlab.vim' },
+  {
+    'simondrake/nvim-review',
+    config = function()
+      require('nvim-review').setup()
+    end,
+  },
 
   -- [[ Theme]]
   {

@@ -22,6 +22,14 @@ vim.api.nvim_create_user_command('GBlameO', function(_)
   vim.ui.open(require('decorated_yank').blame_link_raw())
 end, { nargs = 0, range = true })
 
+vim.api.nvim_create_user_command('GBrowse', function(opts)
+  require('decorated_yank').browse({ line1 = opts.range > 0 and opts.line1 or nil, line2 = opts.range > 0 and opts.line2 or nil })
+end, { nargs = 0, range = true })
+
+vim.api.nvim_create_user_command('GBrowseY', function(opts)
+  vim.fn.setreg('+', require('decorated_yank').browse_link_raw({ line1 = opts.range > 0 and opts.line1 or nil, line2 = opts.range > 0 and opts.line2 or nil }))
+end, { nargs = 0, range = true })
+
 vim.api.nvim_create_user_command('Hacker', function(_)
   vim.api.nvim_command 'color alpha-green'
 end, { nargs = 0, range = true })

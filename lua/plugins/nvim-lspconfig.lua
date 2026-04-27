@@ -62,6 +62,7 @@ return {
 
       local servers = {
         jsonls = {},
+        yamlls = {},
         terraformls = {},
         rust_analyzer = {},
         gopls = {
@@ -104,7 +105,8 @@ return {
 
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
+        'stylua',
+        'prettier',
       })
 
       require('mason-lspconfig').setup {
