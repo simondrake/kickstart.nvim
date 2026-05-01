@@ -5,8 +5,25 @@ return {
     build = ':TSUpdate',
     config = function()
       require('nvim-treesitter').install {
-        'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc',
-        'go', 'rust', 'dockerfile', 'proto', 'json', 'yaml', 'git_rebase',
+        'bash',
+        'c',
+        'dockerfile',
+        'git_rebase',
+        'go',
+        'gomod',
+        'gosum',
+        'html',
+        'json',
+        'jsonnet',
+        'lua',
+        'make',
+        'markdown',
+        'proto',
+        'rust',
+        'terraform',
+        'vim',
+        'vimdoc',
+        'yaml',
       }
 
       vim.api.nvim_create_autocmd('FileType', {
