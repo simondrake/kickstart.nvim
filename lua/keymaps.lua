@@ -60,3 +60,5 @@ end)
 vim.keymap.set('n', '`j', function()
   vim.cmd 'e ~/journal.md'
 end)
+
+vim.keymap.set('x', '<leader>J', [[:s/\s*\\\s*\n\s*/ /g<CR>]], { desc = 'Join lines, removing backslash continuations' })
