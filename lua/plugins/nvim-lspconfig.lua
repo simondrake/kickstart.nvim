@@ -18,7 +18,6 @@ return {
           end
 
           map('R', vim.lsp.buf.rename, '[R]e[n]ame')
-          map('<leader>of', vim.diagnostic.open_float, '[O]pen [F]loat')
           map('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           -- The following two autocommands are used to highlight references of the
