@@ -48,6 +48,7 @@ return {
         'vim',
         'vimdoc',
         'yaml',
+        'helm',
       }
 
       vim.api.nvim_create_autocmd('FileType', {

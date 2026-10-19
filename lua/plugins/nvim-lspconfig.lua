@@ -1,4 +1,5 @@
 return {
+  { 'qvalentin/helm-ls.nvim' },
   {
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -60,6 +61,7 @@ return {
       end
 
       local servers = {
+        helm_ls = {},
         jsonls = {},
         yamlls = {},
         terraformls = {},
